@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+#$ -N "vrptw20_high_p"
+#
+# Combines STDERR & STDOUT to STDOUT
+#####$ -j y
+
+## Simply output the jobid.
+#$ -terse
+
+
+## Run exactly one process under dev.
+#$ -pe gpu-v100  1
+#$ -l res_cpus=1
+#$ -l res_mem=8192
+#$ -l h_rt=604800
+#$ -l res_image=nrc/nrc_all_default_ubuntu-18.04-amd64_latest
+#$ -o /gpfs/fs2c/nrc/ict/others/project_wl/vrptw_high/hier_add_penalty/log
+#$ -P nrc_ict
+#$ -e /gpfs/fs2c/nrc/ict/others/project_wl/vrptw_high/hier_add_penalty/log
+#$ -S /bin/bash
+#$ -M wel000
+#$ -notify
+#$
+
+## User provided from the command line.
+## Job Array:
+#$
+## Priority:
+#$
+## Resources:
+#$ -l res_gpus=1,res_gputype=v100
+## Nodes:
+#$
+## Additional user-specified qsub parameters
+#$
+python /gpfs/fs2c/nrc/ict/others/project_wl/vrptw_high/hier_add_penalty/train_high.py
+
