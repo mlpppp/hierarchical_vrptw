@@ -53,7 +53,7 @@ class VrptwData():
             self.CAPACITY_RELAX_FACTOR = CAPACITY_RELAX_FACTOR
         else:
             self.CAPACITY_RELAX_FACTOR = args['CAPACITY_RELAX_FACTOR']
-
+        self.one_veh = False #deprecated
     
     def get_batch(self):
         return self.generate_data()
@@ -62,7 +62,7 @@ class VrptwData():
         X, solution, all_routes = self.generate_data(seed)
         
         if sample is not None:
-            X_name = 'cvrptw-size-'+str(self.B)+'-len-'+str(self.size)+'('+str(sample)+')'
+            X_name = '(2OPT)-cvrptw-size-'+str(self.B)+'-len-'+str(self.size)+'('+str(sample)+')'
             X_path = os.path.join(path, X_name)
             sol_name = '2OPT_Solution-' + X_name
             sol_path = os.path.join(path, sol_name)
@@ -226,6 +226,17 @@ class JAMPR_data():
             self.num_cust  = int(args['size'])   
         self.depot_tw = [0, 1000]
         self.time_factor = int(args['time_factor'])
+        
+        
+    def save_data(self, path, sample = None):
+        X = self.generate_data()
+        
+        if sample is not None:
+            X_name = '(JAMPR)-cvrptw-size-'+str(self.B)+'-len-'+str(self.num_cust)+'('+str(sample)+')'
+            X_path = os.path.join(path, X_name)
+
+        np.save(X_path, X)
+        
         
     def transform_data_structure(self, raw_data):
         B = self.B
